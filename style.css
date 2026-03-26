@@ -1,0 +1,112 @@
+:root {
+    --bg-color: #fdfdfd;
+    --text-color: #1a1a1a;
+    --accent-color: #0066cc;
+    --dim-text: #666;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    font-family: "Charter", "Bitstream Charter", "Sitka Text", Georgia, serif;
+    line-height: 1.7;
+    margin: 0;
+    padding: 0;
+    scroll-behavior: smooth;
+}
+
+/* Header & Nav */
+.site-nav {
+    text-align: center;
+    padding: 4rem 1rem 2rem;
+}
+
+.site-title {
+    font-size: 1.2rem;
+    font-weight: 500;
+    letter-spacing: 1px;
+    text-transform: lowercase;
+    margin-bottom: 0.5rem;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: var(--dim-text);
+    margin: 0 1rem;
+    font-size: 0.9rem;
+    transition: color 0.2s;
+}
+
+.nav-links a:hover {
+    color: var(--text-color);
+}
+
+/* Main Content Area */
+main {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 0 1.5rem 10rem;
+}
+
+.post-title {
+    font-size: 2.2rem;
+    font-weight: 400;
+    margin-bottom: 0.2rem;
+}
+
+time {
+    color: var(--dim-text);
+    font-size: 0.9rem;
+}
+
+.interactive-placeholder {
+    background: #f4f4f4;
+    height: 300px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 3rem 0;
+    border-radius: 4px;
+    color: #999;
+    font-style: italic;
+    border: 1px solid #eee;
+}
+
+/* Separator */
+.separator {
+    border: 0;
+    border-top: 1px solid #eee;
+    margin: 6rem 0;
+}
+
+/* Archive */
+.archive-section h3 {
+    font-size: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.archive-list {
+    list-style: none;
+    padding: 0;
+}
+
+.archive-list li {
+    display: flex;
+    margin-bottom: 0.8rem;
+    font-size: 1.1rem;
+}
+
+.archive-list .date {
+    width: 60px;
+    color: var(--dim-text);
+    font-size: 0.9rem;
+}
+
+.archive-list a {
+    color: var(--accent-color);
+    text-decoration: none;
+}
+
+.archive-list a:hover {
+    text-decoration: underline;
+}
