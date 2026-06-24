@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ayush Biswas</title>
+    
+    <!-- Google Fonts: Barrio -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Barrio&display=block" rel="stylesheet">
+
+    <style>
+        :root {
+            --primary-color: #111111;
+            --secondary-color: #666666;
+            --border-color: #111111;
+            --bg-color: #ffffff;
+            --transition: all 0.25s ease-in-out;
+        }
+
+        body {
+            font-family: 'Calibri', 'Segoe UI', Apple-system, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--primary-color);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .window-wrapper {
+            width: 100%;
+            max-width: 680px;
+            padding: 40px 20px;
+            box-sizing: border-box;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        header {
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 16px;
+            margin-bottom: 40px;
+        }
+
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+        }
+
+        .brand-name {
+            font-family: 'Barrio', cursive;
+            font-size: 2.4rem;
+            line-height: 1;
+            margin: 0;
+            text-transform: uppercase;
+            opacity: 0; 
+            transition: opacity 0.15s ease-in-out;
+        }
+        
+        .fonts-loaded .brand-name {
+            opacity: 1;
+        }
+
+        .brand-name a {
+            display: inline-flex;
+            align-items: flex-end;
+            gap: 2px;
+            height: 2.4rem; 
+            padding: 0;
+            vertical-align: bottom;
+        }
+
+        .brand-name, 
+        .brand-name a,
+        .brand-name span {
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            -khtml-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            -webkit-user-drag: none;
+        }
+
+        .brand-name span {
+            display: inline-block;
+            transform-origin: bottom center;
+            will-change: transform;
+            transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .brand-name::selection, .brand-name span::selection { background: transparent !important; color: inherit !important; }
+        .brand-name::-moz-selection, .brand-name span::-moz-selection { background: transparent !important; color: inherit !important; }
+
+        .nav-menu button, .nav-menu a {
+            font-family: 'Calibri', sans-serif;
+            background: none;
+            border: none;
+            color: var(--primary-color);
+            margin-left: 24px;
+            font-size: 1.05rem;
+            letter-spacing: 0.5px;
+            cursor: pointer;
+            padding: 0;
+            text-decoration: none;
+            display: inline-block;
+            transition: var(--transition);
+        }
+
+        .nav-menu button:hover, .nav-menu a:hover {
+            color: var(--secondary-color);
+            text-decoration: underline;
+            text-underline-offset: 4px;
+        }
+
+        .header-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 20px;
+        }
+
+        .social-group {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .icon-link {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 24px;
+            height: 24px;
+            border: 1px solid var(--border-color);
+            border-radius: 50%;
+            color: var(--primary-color);
+            text-decoration: none;
+            transition: var(--transition);
+            cursor: pointer;
+        }
+
+        .icon-link svg { width: 12px; height: 12px; fill: currentColor; }
+        .icon-link:hover { background-color: var(--primary-color); color: var(--bg-color); }
+
+        /* --- Horizontal Sharing Ribbon Menu Dropdown --- */
+        .share-wrapper {
+            position: relative;
+            display: inline-flex;
+        }
+
+        .share-dropdown {
+            display: none;
+            position: absolute;
+            top: 34px; 
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: var(--bg-color);
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            padding: 6px 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            z-index: 100;
+            flex-direction: row; 
+            align-items: center;
+            gap: 10px;
+        }
+
+        .share-dropdown.show {
+            display: flex;
+        }
+
+        .share-btn-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 26px;
+            height: 26px;
+            color: var(--primary-color);
+            transition: var(--transition);
+            text-decoration: none;
+        }
+
+        .share-btn-icon svg {
+            width: 14px;
+            height: 14px;
+            fill: currentColor;
+        }
+
+        .share-btn-icon:hover {
+            color: var(--secondary-color);
+        }
+
+        .share-divider {
+            width: 1px;
+            height: 16px;
+            background-color: #e0e0e0;
+        }
+
+        .share-link-container {
+            display: flex;
+            align-items: center;
+            border: 1px solid #e0e0e0;
+            border-radius: 4px;
+            padding: 2px 6px;
+            background-color: #f9f9f9;
+            gap: 8px;
+        }
+
+        .share-input {
+            font-family: 'Calibri', sans-serif;
+            font-size: 0.8rem;
+            color: var(--secondary-color);
+            border: none;
+            background: transparent;
+            width: 110px;
+            outline: none;
+            text-overflow: ellipsis;
+        }
+
+        .share-copy-btn {
+            font-family: 'Calibri', sans-serif;
+            font-size: 0.8rem;
+            font-weight: bold;
+            background: none;
+            border: none;
+            color: var(--primary-color);
+            cursor: pointer;
+            padding: 2px 4px;
+            transition: var(--transition);
+        }
+
+        .share-copy-btn:hover {
+            color: var(--secondary-color);
+        }
+
+        main {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            margin-bottom: 80px;
+            flex-grow: 1;
+        }
+
+        .post-container, .archive-container {
+            width: 100%;
+            max-width: 600px;
+        }
+
+        .post-title {
+            font-size: 2.1rem;
+            font-weight: normal;
+            letter-spacing: -0.5px;
+            margin: 0 0 10px 0;
+            line-height: 1.2;
+        }
+
+        .post-meta {
+            font-size: 0.95rem;
+            color: var(--secondary-color);
+            margin-bottom: 32px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .post-body {
+            font-size: 1.15rem;
+            line-height: 1.75;
+            color: #222222;
+            text-align: justify;
+            text-justify: inter-word;
+        }
+
+        .post-body p { margin-bottom: 24px; }
+
+        .archive-list {
+            list-style: none;
+            padding: 0;
+            margin: 40px 0 0 0;
+            text-align: left;
+        }
+
+        .archive-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            padding: 12px 0;
+            border-bottom: 1px dashed #e0e0e0;
+        }
+
+        .archive-item button {
+            background: none;
+            border: none;
+            font-family: 'Calibri', sans-serif;
+            font-size: 1.15rem;
+            color: var(--primary-color);
+            cursor: pointer;
+            padding: 0;
+            text-align: left;
+        }
+
+        .archive-item button:hover {
+            color: var(--secondary-color);
+            text-decoration: underline;
+        }
+
+        .archive-date {
+            font-size: 0.95rem;
+            color: var(--secondary-color);
+        }
+
+        footer {
+            border-top: 1px solid var(--border-color);
+            padding-top: 24px;
+            padding-bottom: 40px;
+            display: flex;
+            justify-content: center;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="window-wrapper">
+        <header>
+            <div class="header-top">
+                <h1 class="brand-name">
+                    <a href="#" id="dock-link" onclick="event.preventDefault(); showLatestPost();" draggable="false" style="text-decoration: none; color: inherit;">
+                        <span>A</span><span>Y</span><span>U</span><span>S</span><span>H</span><span>B</span><span>I</span><span>S</span><span>W</span><span>A</span><span>S</span>
+                    </a>
+                </h1>
+                <nav class="nav-menu">
+                    <a href="#" onclick="event.preventDefault(); showLatestPost();">Home</a>
+                    <button onclick="renderArchives()">Archives</button>
+                </nav>
+            </div>
+            
+            <div class="header-bottom">
+                <div class="social-group">
+                    <a href="mailto:ayushbisswas@gmail.com" class="icon-link" title="Email">
+                        <svg viewBox="0 0 24 24"><path d="M0 3v18h24v-18h-24zm21.518 2l-9.518 7.713-9.518-7.713h19.036zm-19.518 14v-11.817l10 8.104 10-8.104v11.817h-20z"/></svg>
+                    </a>
+                    
+                    <div class="share-wrapper" id="share-wrapper">
+                        <a href="#" class="icon-link" title="Share Page" onclick="event.preventDefault(); toggleShareMenu();">
+                            <svg viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92 1.61 0 2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92z"/></svg>
+                        </a>
+                        
+                        <div class="share-dropdown" id="share-dropdown">
+                            <a href="#" id="share-x" target="_blank" class="share-btn-icon" title="Share on X">
+                                <svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                            </a>
+                            <a href="#" id="share-wa" target="_blank" class="share-btn-icon" title="Share on WhatsApp">
+                                <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L0 24l6.335-1.662c1.746.953 3.71 1.455 5.703 1.456h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                            </a>
+                            <a href="#" id="share-li" target="_blank" class="share-btn-icon" title="Share on LinkedIn">
+                                <svg viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+                            </a>
+                            
+                            <div class="share-divider"></div>
+                            
+                            <div class="share-link-container">
+                                <input type="text" id="share-url-input" class="share-input" readonly>
+                                <button onclick="copyToClipboard(this)" class="share-copy-btn">Copy</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <a href="#" class="icon-link" title="Social 2"><svg viewBox="0 0 24 24"><path d="M12 2c5.514 0 10 4.486 10 10s-4.486 10-10 10-10-4.486-10-10 4.486-10 10-10zm0-2c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12z"/></svg></a>
+                </div>
+            </div>
+        </header>
+
+        <main id="content-area"></main>
+
+        <footer></footer>
+    </div>
+
+    <script src="posts.js"></script>
+    <script>
+        // --- Hard Reset FOUT Guard ---
+        if ('fonts' in document) {
+            document.fonts.load('1em Barrio').then(() => {
+                document.documentElement.classList.add('fonts-loaded');
+            }).catch(() => {
+                document.documentElement.classList.add('fonts-loaded');
+            });
+        } else {
+            document.documentElement.classList.add('fonts-loaded');
+        }
+
+        const contentArea = document.getElementById('content-area');
+
+        // --- Custom Horizontal Share Logic ---
+        function toggleShareMenu() {
+            const dropdown = document.getElementById('share-dropdown');
+            const urlInput = document.getElementById('share-url-input');
+            
+            const currentUrl = window.location.href;
+            const encodedUrl = encodeURIComponent(currentUrl);
+            const encodedTitle = encodeURIComponent(document.title);
+
+            urlInput.value = currentUrl;
+
+            document.getElementById('share-x').href = `https://twitter.com/intent/tweet?url=${encodedUrl}&text=${encodedTitle}`;
+            document.getElementById('share-wa').href = `https://api.whatsapp.com/send?text=${encodedTitle}%20${encodedUrl}`;
+            document.getElementById('share-li').href = `https://www.linkedin.com/sharing/share-offsite/?url=${encodedUrl}`;
+
+            dropdown.classList.toggle('show');
+        }
+
+        function copyToClipboard(buttonElement) {
+            const urlInput = document.getElementById('share-url-input');
+            navigator.clipboard.writeText(urlInput.value).then(() => {
+                buttonElement.innerText = 'Copied!';
+                setTimeout(() => {
+                    buttonElement.innerText = 'Copy';
+                    document.getElementById('share-dropdown').classList.remove('show');
+                }, 1200);
+            });
+        }
+
+        document.addEventListener('click', (e) => {
+            const wrapper = document.getElementById('share-wrapper');
+            const dropdown = document.getElementById('share-dropdown');
+            if (wrapper && !wrapper.contains(e.target)) {
+                dropdown.classList.remove('show');
+            }
+        });
+
+
+        // --- Continuous Proximity Engine ---
+        const dockLink = document.getElementById('dock-link');
+        const letters = dockLink.querySelectorAll('span');
+
+        dockLink.addEventListener('mousemove', (e) => {
+            const mouseX = e.clientX;
+            const mouseY = e.clientY;
+
+            letters.forEach((letter) => {
+                const rect = letter.getBoundingClientRect();
+                const letterX = rect.left + rect.width / 2;
+                const letterY = rect.top + rect.height / 2;
+
+                const distance = Math.sqrt(Math.pow(mouseX - letterX, 2) + Math.pow(mouseY - letterY, 2));
+                const maxDistance = 110; 
+
+                if (distance < maxDistance) {
+                    const proximity = 1 - (distance / maxDistance);
+                    
+                    const neighborhoodWave = Math.pow(proximity, 2); 
+                    const individualPop = Math.pow(proximity, 6); 
+
+                    const scale = 1 + (0.08 * neighborhoodWave) + (0.14 * individualPop);        
+                    const translateY = -((1.5 * neighborhoodWave) + (4.5 * individualPop));       
+
+                    letter.style.transform = `scale(${scale}) translateY(${translateY}px)`;
+                } else {
+                    letter.style.transform = 'scale(1) translateY(0px)';
+                }
+            });
+        });
+
+        dockLink.addEventListener('mouseleave', () => {
+            letters.forEach((letter) => {
+                letter.style.transform = 'scale(1) translateY(0px)';
+            });
+        });
+
+
+        // --- Core Application Logic with Chronological Sorting Pass ---
+        
+        function initializeBlogEngine() {
+            // Programmatically sort the array dynamically by actual Timestamp (Descending: Most Recent First)
+            if (window.blogPosts && window.blogPosts.length > 0) {
+                window.blogPosts.sort((a, b) => new Date(b.date) - new Date(a.date));
+            }
+            showLatestPost();
+        }
+
+        function showLatestPost() {
+            if (window.blogPosts && window.blogPosts.length > 0) {
+                renderPost(0); // Index 0 is now guaranteed to be the most recent post
+            } else {
+                contentArea.innerHTML = `<p class="post-body" style="text-align:center;">No posts configured.</p>`;
+            }
+        }
+
+        async function renderPost(index) {
+            const post = window.blogPosts[index];
+            try {
+                const response = await fetch(post.file);
+                if (!response.ok) throw new Error('File not found');
+                const HTMLBodyContent = await response.text();
+                
+                contentArea.innerHTML = `
+                    <article class="post-container">
+                        <h2 class="post-title">${post.title}</h2>
+                        <div class="post-meta">${post.date} / ${post.category}</div>
+                        <div class="post-body">${HTMLBodyContent}</div>
+                    </article>
+                `;
+            } catch (err) {
+                contentArea.innerHTML = `<p class="post-body" style="text-align:center; color:red;">Failed to pull the linked file "${post.file}". Ensure the file path is correct.</p>`;
+            }
+            window.scrollTo(0,0);
+        }
+
+        function renderArchives() {
+            let listItems = '';
+            window.blogPosts.forEach((post, index) => {
+                listItems += `
+                    <li class="archive-item">
+                        <button onclick="renderPost(${index})">${post.title}</button>
+                        <span class="archive-date">${post.date}</span>
+                    </li>
+                `;
+            });
+
+            contentArea.innerHTML = `
+                <div class="archive-container">
+                    <h2 class="post-title" style="text-align:left;">Archives</h2>
+                    <ul class="archive-list">${listItems}</ul>
+                </div>
+            `;
+        }
+
+        // Initialize engine on window load
+        window.onload = initializeBlogEngine;
+    </script>
+</body>
+</html>
