@@ -1,4 +1,4 @@
-We shape our tools, and thereafter our tools shape us. Lately, the friction of modern interfaces has begun to feel less like intentional utility and more like an architecture of extraction—walls built specifically around attention.
+We shape our tools, and thereafter our tools shape us. Lately, the friction of modern interfaces has begun to feel less like intentional utility and more like an architecture of extraction walls built specifically around attention.
 
 This journal is an exercise in stripping away the scaffolding. No framework bloat, no complex build steps, and no tracking pixels. Just raw hypertext, clean layout primitives, and responsive typography. There is a quiet, unmistakable clarity that comes with returning to the fundamentals of the open web.
 
